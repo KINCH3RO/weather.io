@@ -2,11 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import SearchPage from './SearchPage';
+import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
+
 import reportWebVitals from './reportWebVitals';
+import SideBar from './SideBar';
+import ResultPage from './resultPage';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/App" element={<App />}>
+        
+            <Route path="result" element={<ResultPage />} />
+            <Route path="search" element={<SearchPage />} />
+          </Route>
+      </Routes>
+    </BrowserRouter>
+
   </React.StrictMode>,
   document.getElementById('root')
 );
