@@ -30,10 +30,10 @@ function HeaderButton(props) {
 function Header(props) {
     return (
         <div className='flex justify-between' >
-            <div className='font-medium text-xl'>What's the Weather Today?</div>
-            <div className='flex'>
+            <div className='font-medium text-xl'>{props.title}</div>
+            {/* <div className='flex'>
                 <HeaderButton iconName="schedule" />
-            </div>
+            </div> */}
 
         </div>)
 }
@@ -52,8 +52,9 @@ function MiniCard(props) {
             <Stat value={percentagePipe(props.clouds)} icon="cloud" />
             <Stat value={weatherPipe(props.temp)} icon="thermostat" />
             <Stat value={percentagePipe(props.humidity)} icon="water_drop" />
+
             <div className='text-gray-500 font-medium text-sm text-center'>
-                {UnixToDate(props.time).getHours().toString().padStart(2,'0') + ':' + UnixToDate(props.time).getMinutes().toString().padStart(2,'0')}
+                {props.type === "daily" ? UnixToDate(props.time).toDateString() : UnixToDate(props.time).getHours().toString().padStart(2, '0') + ':' + UnixToDate(props.time).getMinutes().toString().padStart(2, '0')}
             </div>
 
 
@@ -63,25 +64,45 @@ export default class WeatherTrackCard extends Component {
     render() {
         return (
             <div className=' p-5 flex flex-col '>
-                <Header />
+                <div className='mb-4'>
+                    <Header title={this.props.title} />
+                </div>
+
 
                 <div className='flex max-w-6xl  overflow-x-scroll pb-3 mx-auto'>
 
-                    {this.props.hourlyWeatherData.map((weatherData, index) => {
-                        if (UnixToDate(weatherData.dt).getDay() == new Date().getDay()) {
+                    {this.props.weatherData.map((weatherData, index) => {
+                        let maxItems = this.props.maxItems || 48;
 
+                        let jsx = <MiniCard key={'card-' + index}
+                            type={this.props.type}
+                            icon={weatherData.weather[0].icon}
+                            description={weatherData.weather[0].description}
+                            windSpeed={weatherData.wind_speed}
+                            clouds={weatherData.clouds}
+                            temp={this.props.type === "daily" ? weatherData.temp.max : weatherData.temp}
+                            humidity={weatherData.humidity}
+                            time={weatherData.dt} />
 
-                            return (<MiniCard key={'card-' + index}
-                                icon={weatherData.weather[0].icon}
-                                description={weatherData.weather[0].description}
-                                windSpeed={weatherData.wind_speed}
-                                clouds={weatherData.clouds}
-                                temp={weatherData.temp}
-                                humidity={weatherData.humidity}
-                                time={weatherData.dt}
+                        if (this.props.type === "tomorrow" && index < maxItems) {
+                            let currentDate = new Date()
 
-                            />)
+                            if (UnixToDate(weatherData.dt).getDay() == currentDate.getDay() + 1) {
+                                return jsx
+                            }
                         }
+                        else {
+
+                            if (index < maxItems) {
+                                return jsx
+                            }
+
+                        }
+
+
+
+
+
 
                     })}
 

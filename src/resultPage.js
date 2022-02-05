@@ -6,8 +6,9 @@ import httpClient from 'react-http-client';
 import LoadingPage from './loadingPage';
 import WindCard from './WindCard';
 import WeatherTrackCard from './WeatherTrackCard';
-
-
+import MoonCard from './MoonCard';
+import SunCard from './SunCard';
+import TomorrowCard from './TomorrowCard';
 const SearchBar = (props) => {
 
     let navigate = useNavigate();
@@ -47,7 +48,7 @@ const Header = (props) => {
 
 
 
-let ResultPage = () => {
+const ResultPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [weatherData, setWeatherData] = useState(null)
 
@@ -75,14 +76,14 @@ let ResultPage = () => {
 
 
     return (
-        <div className='px-10 py-5 flex-1'>
+        <div className='max-w-[1280px] mx-auto px-10 py-5 flex-1'>
 
             <div className='mb-6'>
                 <Header cityName={cityName} countryName="Morocco" />
             </div>
 
 
-            <div className='Content flex gap-6 justify-between mb-3'>
+            <div className='Content flex flex-shrink gap-6  mb-3'>
                 <WeatherCard
                     temp={weatherData.current.temp}
                     minTemp={weatherData.daily[0].temp.min}
@@ -103,13 +104,35 @@ let ResultPage = () => {
 
             </div>
 
-            <div className='flex'>
+            <div>
+                <WeatherTrackCard title="What's the Weather Today?" type="current" maxItems={14} weatherData={weatherData.hourly}></WeatherTrackCard>
+            </div>
+
+            <div className='flex my-4 '>
+
+                <div className='flex gap-2 flex-col mr-2'>
+                    <MoonCard title="Moonrise" time={weatherData.daily[0].moonrise} icon="dark_mode" filled="true" />
+                    <SunCard title="Sunrise" time={weatherData.daily[0].sunrise} icon="light_mode" filled="true" />
+                    <MoonCard title="Moonset" time={weatherData.daily[0].moonset} icon="dark_mode" />
+                    <SunCard title="Sunset" time={weatherData.daily[0].sunset} icon="light_mode" />
+                </div>
+
+
+                <TomorrowCard cityName="Beni Mellal" weatherData={weatherData.daily[1]} />
 
             </div>
 
-            {/* <div>
-                <WeatherTrackCard hourlyWeatherData={weatherData.hourly}></WeatherTrackCard>
-            </div> */}
+            <div>
+                <WeatherTrackCard title="What's the Weather Tomorrow?" type="tomorrow" weatherData={weatherData.hourly}></WeatherTrackCard>
+            </div>
+
+            <div>
+                <WeatherTrackCard title="What's the Weather Next 7 days?" type="daily" weatherData={weatherData.daily}></WeatherTrackCard>
+            </div>
+
+
+
+
         </div>
 
 

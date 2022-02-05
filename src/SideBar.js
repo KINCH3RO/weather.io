@@ -22,7 +22,7 @@ function SideBarButton(props) {
 
 export default class SideBar extends Component {
     render() {
-        return <div className='h-full left-0 pt-8 px-3 mr-2'>
+        return <div className='h-full left-0 pt-8 px-3 mr-2 fixed'>
             <div className='logo'>
                 <img src={logo} className="w-10 mb-2 mx-auto h-10 object-cover" alt="" srcset="" />
                 <span className='text-xs mx-auto font-medium text-gray-900'>Weather.io</span>
