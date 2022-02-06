@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AirCard from './AirCard';
 import WeatherCard from './WeatherCard';
 import { useSearchParams, useNavigate } from 'react-router-dom';
@@ -9,6 +9,13 @@ import WeatherTrackCard from './WeatherTrackCard';
 import MoonCard from './MoonCard';
 import SunCard from './SunCard';
 import TomorrowCard from './TomorrowCard';
+import TemperatureGraph from './TemperatureGraph';
+import UVIcard from './UVIcard';
+import { UnixToDate } from './utilities';
+
+
+
+
 const SearchBar = (props) => {
 
     let navigate = useNavigate();
@@ -49,6 +56,7 @@ const Header = (props) => {
 
 
 const ResultPage = () => {
+    let maxItemsInGraph =12
     const [searchParams, setSearchParams] = useSearchParams();
     const [weatherData, setWeatherData] = useState(null)
 
@@ -73,6 +81,21 @@ const ResultPage = () => {
     if (!weatherData) {
         return <LoadingPage></LoadingPage>
     }
+
+    let xValues = weatherData.hourly.map((x,index)=>{
+        if(index <maxItemsInGraph){
+            return UnixToDate(x.dt).getHours().toString().padStart(2, '0') + ':' + UnixToDate(x.dt).getMinutes().toString().padStart(2, '0')
+        }
+    })
+
+    let yValues = weatherData.hourly.map((x,index)=>{
+        if(index <maxItemsInGraph){
+            return parseInt(x.temp)}
+        
+    })
+
+    xValues = xValues.filter(x=>x!=undefined)
+    yValues = yValues.filter(x=>x!=undefined)
 
 
     return (
@@ -108,17 +131,32 @@ const ResultPage = () => {
                 <WeatherTrackCard title="What's the Weather Today?" type="current" maxItems={14} weatherData={weatherData.hourly}></WeatherTrackCard>
             </div>
 
-            <div className='flex my-4 '>
+            <div className='flex my-4 gap-6 '>
+                <div className='max-h-96 flex-1 bg-gray-100 rounded-md p-5 '>
+                    <TemperatureGraph title="Today's Temperature Graph" label="Temperature" x={xValues} y={yValues} />
+                </div>
 
-                <div className='flex gap-2 flex-col mr-2'>
+                <div className='flex gap-2 flex-col '>
                     <MoonCard title="Moonrise" time={weatherData.daily[0].moonrise} icon="dark_mode" filled="true" />
                     <SunCard title="Sunrise" time={weatherData.daily[0].sunrise} icon="light_mode" filled="true" />
                     <MoonCard title="Moonset" time={weatherData.daily[0].moonset} icon="dark_mode" />
                     <SunCard title="Sunset" time={weatherData.daily[0].sunset} icon="light_mode" />
+                    <UVIcard icon="light_mode" UVI={4.5} />
                 </div>
 
 
-                <TomorrowCard cityName="Beni Mellal" weatherData={weatherData.daily[1]} />
+
+
+
+                <div className=' h-auto'>
+                    <div className='h-full'>
+                        <TomorrowCard cityName="Beni Mellal" weatherData={weatherData.daily[1]} />
+                    </div>
+                </div>
+
+
+
+
 
             </div>
 

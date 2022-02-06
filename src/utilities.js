@@ -1,7 +1,7 @@
 
 
 export function weatherPipe(value, unit = "C°") {
-    
+
     return Math.ceil(value) + " " + unit
 
 }
@@ -70,8 +70,8 @@ export function getWindDirection(degree) {
         return "No Wind Direction"
     }
 
-    let desiredDirection =null
-    let spaceBetweenValues=1000
+    let desiredDirection = null
+    let spaceBetweenValues = 1000
     let directions = {
         East: 90,
         South: 180,
@@ -80,20 +80,38 @@ export function getWindDirection(degree) {
     }
 
     for (let direction in directions) {
-        let value = Math.abs(degree-directions[direction])
-      
-        if(value<spaceBetweenValues){
+        let value = Math.abs(degree - directions[direction])
+
+        if (value < spaceBetweenValues) {
             desiredDirection = direction;
             spaceBetweenValues = value
         }
 
     }
 
-    return desiredDirection +" Wind"
+    return desiredDirection + " Wind"
 
 }
 
-export function UnixToDate(unixTimeStamp){
+export function UnixToDate(unixTimeStamp) {
 
-    return new Date(unixTimeStamp*1000)
+    return new Date(unixTimeStamp * 1000)
 }
+
+export function UVIriskPipe(value) {
+    let x = parseInt(value)
+    console.log(x);
+
+    if (x > 11) { return "Extreme" }
+    else if (x > 8) { return "Very High" }
+    else if (x > 6) { return "High" }
+    else if (x > 3) { return "Moderate" }
+    else if (x > 1) { return "Low" }
+    else { return "Minimal" }
+}
+
+export function UpperCasePipe(value) {
+    return value.toUpperCase()
+}
+
+
