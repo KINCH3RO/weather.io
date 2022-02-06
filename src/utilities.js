@@ -100,7 +100,7 @@ export function UnixToDate(unixTimeStamp) {
 
 export function UVIriskPipe(value) {
     let x = parseInt(value)
-    console.log(x);
+   
 
     if (x > 11) { return "Extreme" }
     else if (x > 8) { return "Very High" }

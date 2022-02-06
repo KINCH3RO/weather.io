@@ -31,7 +31,7 @@ function WindDegree(props) {
 export default class WindCard extends Component {
  
     render() {
-        return (<div style={weatherStyle} className='w-[400px]  flex flex-col rounded-2xl p-5 bg-gradient-to-b from-[#4EA7E4] to-[#FFB074]' >
+        return (<div style={weatherStyle} className='w-[400px] shadow-xl  flex flex-col rounded-2xl p-5 bg-gradient-to-b from-[#4EA7E4] to-[#FFB074]' >
             <div className='flex mb-5'>
                 <div className="iconContainer rounded-full bg-white  w-8 h-8 flex justify-center my-auto mr-6">
                     <span className="material-icons-outlined text-orange-400 text-lg my-auto font-thin">

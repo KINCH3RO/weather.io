@@ -5,7 +5,7 @@ function Stat(props) {
     return (
         <div className='flex justify-between  text-gray-900 my-1 mx-2 '>
             <div className='mr-5'>
-                <span class="material-icons-outlined">
+                <span className="material-icons-outlined">
                     {props.icon}
                 </span>
             </div>
@@ -20,7 +20,7 @@ function HeaderButton(props) {
     return (
         <button className='text-gray-500 mx-2 rounded-xl w-10 h-10 flex flex-col justify-center transition-colors
         hover:bg-orange-400 hover:text-white hover:shadow hover:shadow-orange-400 '>
-            <span class="material-icons-sharp my-auto">
+            <span className="material-icons-sharp my-auto">
                 {props.iconName}
             </span>
         </button>
@@ -42,7 +42,7 @@ function MiniCard(props) {
 
         <div className='flex flex-col px-3 py-2   w-44 border-r border-gray-200'>
             <div className=' p-2 rounded-full border  mx-auto mb-2'>
-                <img className='h-12 w-12 ' src={`http://openweathermap.org/img/wn/${props.icon}@2x.png`} alt="" srcset="" />
+                <img className='h-12 w-12 ' src={`http://openweathermap.org/img/wn/${props.icon}@2x.png`} alt="" srcSet="" />
             </div>
 
             <div className='text-center mb-4'>{props.description}</div>

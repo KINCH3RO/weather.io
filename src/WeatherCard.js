@@ -23,7 +23,7 @@ export default class WeatherCard extends Component {
         super(props)
     }
     render() {
-        return (<div style={weatherStyle} className='w-[400px]  flex flex-col rounded-2xl p-5 bg-gradient-to-b from-[#BEE6E5] to-[#EFDAC6]' >
+        return (<div style={weatherStyle} className='w-[400px] shadow-xl  flex flex-col rounded-2xl p-5 bg-gradient-to-b from-[#BEE6E5] to-[#EFDAC6]' >
             <div className='flex mb-5'>
                 <div className="iconContainer rounded-full bg-white  w-8 h-8 flex justify-center my-auto mr-6">
                     <span className="material-icons-outlined text-orange-400 text-lg my-auto font-thin">

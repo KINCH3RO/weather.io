@@ -4,7 +4,7 @@ import { UnixToDate } from './utilities';
 export default class SunCard extends Component {
     render() {
         return (
-            <div className='flex px-7 py-3 rounded-xl bg-gray-200 text-gray-900   '>
+            <div className='flex px-7 py-3 rounded-xl bg-gray-200 text-gray-900 shadow-md   '>
                 <div className='my-auto mr-5 text-orange-500'>
                     <span className={this.props.filled ? 'material-icons' : 'material-icons-outlined'}>
                         {this.props.icon}

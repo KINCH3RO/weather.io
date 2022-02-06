@@ -34,7 +34,7 @@ export default class AirCard extends Component {
         let mainPollutant = getMainPollutant(this.props.pollutants)
        
 
-        return (<div style={weatherStyle} className='w-[400px]  flex flex-col rounded-2xl p-5 bg-gradient-to-b from-[#4DA6E4] to-[#83DCDF]' >
+        return (<div style={weatherStyle} className='w-[400px] shadow-xl  flex flex-col rounded-2xl p-5 bg-gradient-to-b from-[#4DA6E4] to-[#83DCDF]' >
             <div className='flex mb-5'>
                 <div className="iconContainer rounded-full bg-white  w-8 h-8 flex justify-center my-auto mr-6">
                     <span className="material-icons-round text-orange-400 text-lg my-auto">

@@ -3,7 +3,7 @@ import { UnixToDate } from './utilities';
 export default class MoonCard extends Component {
     render() {
         return (
-            <div className='flex px-7 py-3 rounded-xl bg-gray-900 text-white '>
+            <div className='flex px-7 py-3 rounded-xl bg-gray-900 text-white shadow-lg '>
                 <div className='my-auto mr-5 text-orange-400'>
                     <span className={this.props.filled?'material-icons':'material-icons-outlined'}>
                         {this.props.icon}
