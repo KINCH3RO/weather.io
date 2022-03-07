@@ -1,5 +1,5 @@
-import React, { useEffect, useLayoutEffect } from 'react';
-import mapboxgl, { LngLat } from 'mapbox-gl';
+import React, {  useLayoutEffect } from 'react';
+import mapboxgl from 'mapbox-gl';
 import { useNavigate } from 'react-router-dom';
 
 function setLastLocation(value) {

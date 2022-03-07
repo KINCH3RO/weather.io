@@ -33,7 +33,7 @@ export default class SideBar extends Component {
             <div className="actionButtons flex flex-col py-2 gap-4 ">
                 <SideBarButton link="search" iconName="search" />
                 <SideBarButton link="searchByMap" iconName="travel_explore" />
-                <SideBarButton iconName="settings" />
+                {/* <SideBarButton iconName="settings" /> */}
 
             </div>
 
