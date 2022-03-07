@@ -11,7 +11,7 @@ import SunCard from './SunCard';
 import TomorrowCard from './TomorrowCard';
 import TemperatureGraph from './TemperatureGraph';
 import UVIcard from './UVIcard';
-import { CamelCasePipe, UnixToDate, addRecentSearch, getRecentSearch } from './utilities';
+import {  UnixToDate, addRecentSearch, endPoint } from './utilities';
 import LocationNotFound from './LocationNotFound';
 
 function triggerScrollAnimation(scrollView, target, treshHold = 0, animation = 'animate__fadeInUp') {
@@ -82,9 +82,9 @@ const ResultPage = () => {
 
         let endpoint = null
         if (cityName) {
-            endpoint = `http://localhost:4200/oneCallWeatherByName?cityName=${cityName}`
+            endpoint = `${endPoint}api/oneCallWeatherByName?cityName=${cityName}`
         } else {
-            endpoint = `http://localhost:4200/oneCallWeatherByLoc?lat=${lat}&lon=${lon}`
+            endpoint = `${endPoint}api/oneCallWeatherByLoc?lat=${lat}&lon=${lon}`
         }
         httpClient.get(endpoint).then(data => {
 

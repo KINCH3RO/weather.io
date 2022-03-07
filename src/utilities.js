@@ -1,3 +1,4 @@
+export const endPoint = "http://localhost:4200/"
 
 
 export function weatherPipe(value, unit = "C°") {
