@@ -3,21 +3,25 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import SearchPage from './SearchPage';
-import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
-import SideBar from './SideBar';
 import ResultPage from './resultPage';
+import RedirectElement from './redirectElement';
+import MapPage from './mapPage'
+
 
 ReactDOM.render(
+
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/App" element={<App />}>
-        
-            <Route path="result" element={<ResultPage />} />
-            <Route path="search" element={<SearchPage />} />
-          </Route>
+        <Route path="" element={<RedirectElement />} />
+        <Route path="/app" element={<App />}>
+
+          <Route path="result" element={<ResultPage />} />
+          <Route path="searchByMap" element={<MapPage />} />
+          <Route path="search" element={<SearchPage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
 

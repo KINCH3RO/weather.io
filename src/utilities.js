@@ -100,7 +100,7 @@ export function UnixToDate(unixTimeStamp) {
 
 export function UVIriskPipe(value) {
     let x = parseInt(value)
-   
+
 
     if (x > 11) { return "Extreme" }
     else if (x > 8) { return "Very High" }
@@ -113,5 +113,34 @@ export function UVIriskPipe(value) {
 export function UpperCasePipe(value) {
     return value.toUpperCase()
 }
+export function CamelCasePipe(value) {
+    let x = value.toLowerCase()
+    x = x.trim()
+    return x[0].toUpperCase() + x.slice(1)
+}
 
+export function addRecentSearch(city, country) {
+    let array = localStorage.getItem('RECENT') ?? '[]'
 
+    array = JSON.parse(array)
+    let index = array.findIndex(x => x.city == city && x.country == country)
+    if (index != -1) {
+        return 
+    }
+    let object = {
+        city,
+        country
+    }
+    array.push(object)
+
+    localStorage.setItem('RECENT', JSON.stringify(array))
+    
+
+}
+
+export function getRecentSearch() {
+    let storage = localStorage.getItem('RECENT') ?? '[]'
+    let object = JSON.parse(storage)
+   
+    return object
+}

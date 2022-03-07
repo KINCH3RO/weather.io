@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import logo from './logo.png'
+import logo from './assets/logo.png'
 
 import { Link } from 'react-router-dom';
 
 function SideBarButton(props) {
-    let linkValue=`/app/${props.link}`
+    let linkValue=`/App/${props.link}`
     return (
         <Link to={linkValue}>
 
@@ -32,8 +32,8 @@ export default class SideBar extends Component {
 
             <div className="actionButtons flex flex-col py-2 gap-4 ">
                 <SideBarButton link="search" iconName="search" />
-                <SideBarButton iconName="travel_explore" />
-                <SideBarButton iconName="settings" />
+                <SideBarButton link="searchByMap" iconName="travel_explore" />
+                {/* <SideBarButton iconName="settings" /> */}
 
             </div>
 

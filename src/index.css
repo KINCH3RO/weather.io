@@ -9,10 +9,12 @@
 } 
 
 *{
-    
+  
   scrollbar-width: thin;
+ 
   
 }
+
 
 .material-icons {
   font-family: 'Material Icons';

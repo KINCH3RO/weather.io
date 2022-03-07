@@ -11,8 +11,8 @@ import SunCard from './SunCard';
 import TomorrowCard from './TomorrowCard';
 import TemperatureGraph from './TemperatureGraph';
 import UVIcard from './UVIcard';
-import { UnixToDate } from './utilities';
-
+import { CamelCasePipe, UnixToDate, addRecentSearch, getRecentSearch } from './utilities';
+import LocationNotFound from './LocationNotFound';
 
 function triggerScrollAnimation(scrollView, target, treshHold = 0, animation = 'animate__fadeInUp') {
     if (scrollView.scrollTop >= target.offsetTop - target.clientHeight - treshHold) {
@@ -34,7 +34,7 @@ const SearchBar = (props) => {
     return (
         <div className="pt-2 relative mx-auto text-gray-600 my-auto">
             <input onKeyDown={search} className="border-2 w-60 focus:border-orange-400 hover:border-orange-400 
-             focus:w-96 transition-[width] border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
+             focus:w-96 transition-[width]  border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
                 type="search" name="search" placeholder="Search" />
             <button type="submit" className="absolute right-0 top-0 mt-4 mr-4  text-orange-400">
                 <span className="material-icons-sharp my-auto">
@@ -45,10 +45,12 @@ const SearchBar = (props) => {
     )
 }
 const Header = (props) => {
+
+
     return (
         <div className='flex justify-between w-full'>
             <div className='text-2xl my-auto'>
-                <span className='font-medium'>{props.cityName}, <span className='font-normal'>{props.countryName}</span> </span>
+                <span className='font-medium'>{props.cityName}<span className='font-normal'>{' ,' + props.countryName}</span> </span>
             </div>
 
             <div >
@@ -65,16 +67,30 @@ const ResultPage = () => {
     let maxItemsInGraph = 12
     const [searchParams, setSearchParams] = useSearchParams();
     const [weatherData, setWeatherData] = useState(null)
+    const [countryName, setCountryName] = useState(null)
 
     let cityName = searchParams.get('city')
+    let lat = searchParams.get('lat')
+    let lon = searchParams.get('lon')
+
     useEffect(() => {
 
-        if (!cityName) {
+        if (!cityName && (!lat || !lon)) {
+            setWeatherData('not found')
             return
         }
-        httpClient.get(`http://localhost:4200/oneCallWeatherByName?cityName=${cityName}`).then(data => {
+
+        let endpoint = null
+        if (cityName) {
+            endpoint = `http://localhost:4200/oneCallWeatherByName?cityName=${cityName}`
+        } else {
+            endpoint = `http://localhost:4200/oneCallWeatherByLoc?lat=${lat}&lon=${lon}`
+        }
+        httpClient.get(endpoint).then(data => {
+
+
             setWeatherData(data)
-        }).catch(x=>{
+        }).catch(x => {
             setWeatherData('not found')
         })
 
@@ -82,7 +98,23 @@ const ResultPage = () => {
             setWeatherData(null)
         }
 
-    }, [cityName])
+    }, [cityName, lat, lon])
+
+    useEffect(() => {
+        if (weatherData) {
+            httpClient.get(`https://restcountries.com/v2/alpha/${weatherData.countryId}`).then(data => {
+                addRecentSearch(weatherData.locationName, data.name)
+                setCountryName(data.name)
+            }).catch(x => {
+                setCountryName('')
+            })
+        }
+
+        return () => {
+            setCountryName(null)
+        }
+    }, [weatherData])
+
 
     useLayoutEffect(() => {
 
@@ -120,12 +152,12 @@ const ResultPage = () => {
     })
 
 
-    if (!weatherData) {
+    if (!weatherData || countryName === null) {
         return <LoadingPage></LoadingPage>
     }
 
-    if(weatherData==='not found'){
-        return <div>Not found</div>
+    if (weatherData === 'not found') {
+        return <LocationNotFound />
     }
 
     let xValues = weatherData.hourly.map((x, index) => {
@@ -151,7 +183,7 @@ const ResultPage = () => {
             <div className='max-w-[1280px] ml-3 px-10 py-5 '>
 
                 <div className='mb-6'>
-                    <Header cityName={cityName} countryName="Morocco" />
+                    <Header cityName={weatherData.locationName} countryName={countryName} />
                 </div>
 
 
@@ -190,7 +222,7 @@ const ResultPage = () => {
                         <SunCard title="Sunrise" time={weatherData.daily[0].sunrise} icon="light_mode" filled="true" />
                         <MoonCard title="Moonset" time={weatherData.daily[0].moonset} icon="dark_mode" />
                         <SunCard title="Sunset" time={weatherData.daily[0].sunset} icon="light_mode" />
-                        <UVIcard icon="light_mode" UVI={4.5} />
+                        <UVIcard icon="light_mode" UVI={weatherData.current.uvi} />
                     </div>
 
 
@@ -199,7 +231,7 @@ const ResultPage = () => {
 
                     <div className=' h-auto'>
                         <div className='h-full'>
-                            <TomorrowCard cityName="Beni Mellal" weatherData={weatherData.daily[1]} />
+                            <TomorrowCard cityName={weatherData.locationName} weatherData={weatherData.daily[1]} />
                         </div>
                     </div>
 
