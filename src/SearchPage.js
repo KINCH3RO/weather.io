@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import httpClient from 'react-http-client';
+import { getEndPoint } from './utilities';
 import { useEffect } from 'react/cjs/react.production.min';
 const SearchBar = (props) => {
     let navigate = useNavigate();
@@ -119,7 +120,7 @@ export default class SeachPage extends Component {
             return
         }
 
-        httpClient.get(`http://geodb-free-service.wirefreethought.com/v1/geo/cities?namePrefix=${inputValue}&hateoasMode=false&limit=5&offset=0`).then(data => {
+        httpClient.get(`${getEndPoint()}/api/getCountries/${inputValue}`).then(data => {
             this.setState({
                 data: data.data
             })
