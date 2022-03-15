@@ -42,7 +42,7 @@ function MiniCard(props) {
 
         <div className='flex flex-col px-3 py-2   w-44 border-r border-gray-200'>
             <div className=' p-2 rounded-full border  mx-auto mb-2'>
-                <img className='h-12 w-12 ' src={`http://openweathermap.org/img/wn/${props.icon}@2x.png`} alt="" srcSet="" />
+                <img className='h-12 w-12 ' src={`https://openweathermap.org/img/wn/${props.icon}@2x.png`} alt="" srcSet="" />
             </div>
 
             <div className='text-center mb-4'>{props.description}</div>

@@ -6,7 +6,7 @@ import { useEffect } from 'react/cjs/react.production.min';
 const SearchBar = (props) => {
     let navigate = useNavigate();
     let timeout = null
-    let interval = 1100
+    let interval = 750
 
 
     let search = ({ keyCode, target }) => {
