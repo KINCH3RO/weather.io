@@ -102,7 +102,7 @@ const ResultPage = () => {
 
     useEffect(() => {
         if (weatherData) {
-            httpClient.get(`https://restcountries.com/v2/alpha/${weatherData.countryId}`).then(data => {
+            httpClient.get(`${getEndPoint()}/api/getCountries/${weatherData.countryId}`).then(data => {
                 addRecentSearch(weatherData.locationName, data.name)
                 setCountryName(data.name)
             }).catch(x => {
